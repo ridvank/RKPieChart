@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'RKPieChart_Example' do
+  pod 'RKPieChart', :path => '../'
+
+  target 'RKPieChart_Tests' do
+    inherit! :search_paths
+
+    pod 'FBSnapshotTestCase'
+  end
+end
