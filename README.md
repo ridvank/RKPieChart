@@ -22,7 +22,7 @@ pod "RKPieChart"
 
 ## Author
 
-ridvank, rkuccuk@innova.com.tr
+ridvank, ridvankuccuk@gmail.com
 
 ## License
 
