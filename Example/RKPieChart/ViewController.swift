@@ -14,12 +14,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    }
+        let firstItem: RKPieChartItem = RKPieChartItem(ratio: 60, color: UIColor.red)
+        let secondItem: RKPieChartItem = RKPieChartItem(ratio: 30, color: UIColor.blue)
+        let thirdItem: RKPieChartItem = RKPieChartItem(ratio: 10, color: UIColor.cyan)
+        
+        let items = [firstItem, secondItem, thirdItem]
+        
+        let chartView = RKPieChart(items: items)
+        chartView.backgroundColor = .white
+        chartView.translatesAutoresizingMaskIntoConstraints = false
+        chartView.arcWidth = 75
+        view.addSubview(chartView)
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        chartView.widthAnchor.constraint(equalToConstant: 250).isActive = true
+        chartView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        chartView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        chartView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
-
+    
 }
 
