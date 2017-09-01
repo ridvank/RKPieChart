@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         let chartView = RKPieChart(items: items)
         chartView.backgroundColor = .white
         chartView.translatesAutoresizingMaskIntoConstraints = false
-        chartView.arcWidth = 75
+        chartView.arcWidth = 60
         view.addSubview(chartView)
 
         chartView.widthAnchor.constraint(equalToConstant: 250).isActive = true

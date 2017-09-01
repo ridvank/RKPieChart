@@ -12,10 +12,12 @@ public class RKPieChartItem {
     var color: UIColor
     var startAngle: CGFloat?
     var endAngle: CGFloat?
+    var title: String?
     
-    public init(ratio: uint, color: UIColor) {
+    public init(ratio: uint, color: UIColor, title: String? = nil) {
         self.ratio = CGFloat(ratio)
         self.color = color
+        self.title = title
     }
 }
 
