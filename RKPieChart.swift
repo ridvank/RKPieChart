@@ -12,9 +12,9 @@ let π: CGFloat = CGFloat(Double.pi)
 
 @IBDesignable class RKPieChart: UIView {
     
-    @IBInspectable var style: CGLineCap = .round
     @IBInspectable var circleColor: UIColor = .white
     @IBInspectable var arcWidth: CGFloat = 76
+    @IBInspectable var style: CGLineCap = .butt
     
     override func draw(_ rect: CGRect) {
         
@@ -23,10 +23,8 @@ let π: CGFloat = CGFloat(Double.pi)
         // radius of the view
         let radius: CGFloat = max(bounds.width, bounds.height)
         
-        // 3
         let arcWidth: CGFloat = self.arcWidth
         
-        // 4
         let startAngle: CGFloat = 3 * π / 2
         let endAngle: CGFloat = π / 2
         
@@ -50,7 +48,6 @@ let π: CGFloat = CGFloat(Double.pi)
                                 endAngle: endAngle,
                                 clockwise: true)
         
-        // 6
         path.lineWidth = arcWidth
         UIColor.red.setStroke()
         path.lineCapStyle = style
