@@ -14,22 +14,25 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let firstItem: RKPieChartItem = RKPieChartItem(ratio: 50, color: .white, title: "1th Item")
+        let firstItem: RKPieChartItem = RKPieChartItem(ratio: 50, color: UIColor.orange, title: "1️⃣th Item ")
+        let secondItem: RKPieChartItem = RKPieChartItem(ratio: 30, color: UIColor.gray, title: "2️⃣nd Item")
+        let thirdItem: RKPieChartItem = RKPieChartItem(ratio: 20, color: UIColor.yellow, title: "3️⃣th Item")
         
-        let chartView = RKPieChartView(items: [firstItem])
-        chartView.circleColor = UIColor.red.light
+        let chartView = RKPieChartView(items: [firstItem, secondItem, thirdItem], centerTitle: "I am title 🕶")
+        chartView.circleColor = .clear
         chartView.translatesAutoresizingMaskIntoConstraints = false
         chartView.arcWidth = 60
-        chartView.isIntensityActivated = true
+        chartView.isIntensityActivated = false
         chartView.style = .butt
-        chartView.isTitleViewHidden = true
+        chartView.isTitleViewHidden = false
         chartView.isAnimationActivated = true
-        view.addSubview(chartView)
-
+        self.view.addSubview(chartView)
+        
         chartView.widthAnchor.constraint(equalToConstant: 250).isActive = true
         chartView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        chartView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        chartView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        chartView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        chartView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        
     }
     
 }
@@ -55,5 +58,3 @@ private extension UIColor {
     }
     
 }
-
-
