@@ -30,7 +30,7 @@ let firstItem: RKPieChartItem = RKPieChartItem(ratio: 50, color: .orange, title:
 let secondItem: RKPieChartItem = RKPieChartItem(ratio: 30, color: .gray, title: "2️⃣nd Item")
 let thirdItem: RKPieChartItem = RKPieChartItem(ratio: 20, color: .yellow, title: "3️⃣th Item")
 ```
-Initalization is also simple:
+Initalization is also simple; ```items``` variable is required and ```centerTitle``` variable is optional.
 ```swift
 let chartView = RKPieChartView(items: [firstItem, secondItem, thirdItem], centerTitle: "I am title 🕶")
 ```
@@ -46,6 +46,19 @@ You can also give indensity to the chart by updating ```isIntensityActivated``` 
 ```swift
 chartView.isIntensityActivated = true
 ```
+You can update the style of the pie chart. 3 types supported. ```butt```,```square``` and ```round```. If you have 1 item to show you can choose all of them. However If you have multiple item ```round``` and ```square``` not supported.
+```swift
+chartView.style = .butt
+```
+You can hide the ```RKPieChart``` item title if you want by using:
+```swift
+chartView.isTitleViewHidden = false
+```
+You can animate ```RKPieChart``` view if you want by using:
+```swift
+chartView.isAnimationActivated = true
+```
+Default type is ```false``` which means no animation will be executed.
 
 ## Example
 
