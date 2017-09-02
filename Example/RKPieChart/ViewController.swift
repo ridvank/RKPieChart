@@ -20,8 +20,8 @@ class ViewController: UIViewController {
         let fourthItem: RKPieChartItem = RKPieChartItem(ratio: 5, color: .green, title: "4th Item")
         let fifthItem: RKPieChartItem = RKPieChartItem(ratio: 35, color: .black, title: "5th Item")
         
-        let chartView = RKPieChartView(items: [firstItem, secondItem, thirdItem, fourthItem, fifthItem])
-        chartView.circleColor = UIColor.red.light
+        let chartView = RKPieChartView(items: [firstItem, secondItem, thirdItem, fourthItem, fifthItem], centerTitle: "Center Title")
+//        chartView.circleColor = UIColor.red.light
         chartView.translatesAutoresizingMaskIntoConstraints = false
         chartView.arcWidth = 30
         chartView.isIntensityActivated = true

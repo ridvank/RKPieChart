@@ -23,24 +23,30 @@ private enum LineCapStyle: Int {
 
 public class RKPieChartView: UIView {
     
-    fileprivate var items: [RKPieChartItem] = [RKPieChartItem]()
-    private var titlesView: UIStackView?
-    
+    /// background color of the pie
     public var circleColor: UIColor = .white {
         didSet {
             setNeedsLayout()
         }
     }
+    
+    
+    /// width of the each item
     public var arcWidth: CGFloat = 75 {
         didSet {
             setNeedsLayout()
         }
     }
+    
+    
+    /// add intensity to item or not
     public var isIntensityActivated: Bool = false {
         didSet {
             setNeedsLayout()
         }
     }
+    
+    /// show the titles of the item or not
     public var isTitleViewHidden: Bool = false {
         didSet {
             if !isTitleViewHidden {
@@ -49,6 +55,8 @@ public class RKPieChartView: UIView {
             }
         }
     }
+    
+    /// line cap style. ex: butt, round, square
     public var style: CGLineCap = .butt {
         didSet {
             if (items.count != 1 && style != .butt) {
@@ -58,14 +66,21 @@ public class RKPieChartView: UIView {
             setNeedsLayout()
         }
     }
+    
+    
+    /// animate each item or not
     public var isAnimationActivated: Bool = false {
         didSet {
             setNeedsLayout()
         }
     }
-        
+    
+    private var items: [RKPieChartItem] = [RKPieChartItem]()
+    private var titlesView: UIStackView?
     private var totalRatio: CGFloat = 0
     private let itemHeight: CGFloat = 10.0
+    private var centerTitle: String?
+    private var centerLabel: UILabel?
     
     private var currentTime = CACurrentMediaTime()
     
@@ -96,9 +111,16 @@ public class RKPieChartView: UIView {
         }
     }
     
-    convenience public init(items: [RKPieChartItem]) {
+    
+    /// Init PKPieChartView
+    ///
+    /// - Parameters:
+    ///   - items: pie chart items to be displayed
+    ///   - centerTitle: add title to the center of the pie chart
+    convenience public init(items: [RKPieChartItem], centerTitle: String? = nil) {
         self.init()
         self.items = items
+        self.centerTitle = centerTitle
         calculateAngles()
         backgroundColor = .clear
     }
@@ -106,7 +128,7 @@ public class RKPieChartView: UIView {
     public override func layoutSubviews() {
         super.layoutSubviews()
         if !isTitleViewHidden {
-            showTitle()
+            showChildTitles()
         }
     }
     
@@ -164,9 +186,31 @@ public class RKPieChartView: UIView {
                 deepPath.lineCapStyle = style
                 deepPath.stroke()
             }
+            if(centerLabel == nil && centerTitle != nil) {
+                centerLabel = UILabel(frame: .zero)
+                centerLabel?.translatesAutoresizingMaskIntoConstraints = false
+                centerLabel?.font = UIFont(name: "HelveticaNeue", size: 14.0)
+                centerLabel?.minimumScaleFactor = 0.7
+                centerLabel?.numberOfLines = 2
+                centerLabel?.textAlignment = .center
+                centerLabel?.text = centerTitle
+                self.addSubview(centerLabel!)
+                
+                centerLabel?.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+                centerLabel?.widthAnchor.constraint(equalToConstant: radius/2 - arcWidth/2).isActive = true
+                
+                if (isTitleViewHidden) {
+                    centerLabel?.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+                }
+                else {
+                    centerLabel?.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -(CGFloat(items.count) * itemHeight)).isActive = true
+                }
+            }
         }
     }
     
+    
+    /// calculate each item's angle to present pie chart
     private func calculateAngles() {
         totalRatio = items.map({ $0.ratio }).reduce(0, { $0 + $1 })
         for (index, item) in items.enumerated() {
@@ -181,7 +225,9 @@ public class RKPieChartView: UIView {
         }
     }
     
-    private func showTitle() {
+    
+    /// show each item's title
+    private func showChildTitles() {
         if (titlesView == nil) {
             titlesView = UIStackView(frame: CGRect(x: 0, y: bounds.height - (CGFloat(2 * items.count) * itemHeight), width: bounds.width, height: CGFloat(2 * items.count) * itemHeight))
             titlesView?.backgroundColor = .gray
@@ -197,6 +243,9 @@ public class RKPieChartView: UIView {
         }
     }
     
+    /// calculate center of the graph
+    ///
+    /// - Returns: point of the center
     private func calculateCenter() -> CGPoint {
         if isTitleViewHidden {
             return CGPoint(x:bounds.width/2, y: bounds.height/2)
@@ -206,6 +255,9 @@ public class RKPieChartView: UIView {
         }
     }
     
+    /// calculate radius of the graph
+    ///
+    /// - Returns: value of the radius
     private func calculateRadius() -> CGFloat {
         if isTitleViewHidden {
             return min(bounds.width, bounds.height)
