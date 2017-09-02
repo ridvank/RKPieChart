@@ -75,10 +75,10 @@ public class RKPieChartView: UIView {
     override public func draw(_ rect: CGRect) {
         
         // Center of the view
-        let center = CGPoint(x:bounds.width/2, y: bounds.height/2 - CGFloat(items.count) * itemHeight)
+        let center = calculateCenter()
         
         // Radius of the view
-        let radius: CGFloat = max(bounds.width - CGFloat(items.count) * 2 * itemHeight, bounds.height - CGFloat(items.count) * 2 * itemHeight)
+        let radius = calculateRadius()
         
         let arcWidth: CGFloat = self.arcWidth
         
@@ -115,15 +115,12 @@ public class RKPieChartView: UIView {
     
     private func drawCircle(){
         items.forEach { (item) in
-            
             // Center of the view
-            let center = CGPoint(x:bounds.width/2, y: bounds.height/2 - CGFloat(items.count) * itemHeight)
+            let center = calculateCenter()
             
             // Radius of the view
-            let radius: CGFloat = max(bounds.width - CGFloat(items.count) * 2 * itemHeight, bounds.height - CGFloat(items.count) * 2 * itemHeight)
-            
+            let radius: CGFloat = calculateRadius()
             let arcWidth: CGFloat = self.arcWidth
-            
             let circlePath = UIBezierPath(arcCenter: center,
                                           radius: radius/2 - arcWidth/2,
                                           startAngle: item.startAngle!,
@@ -203,6 +200,23 @@ public class RKPieChartView: UIView {
         }
     }
     
+    private func calculateCenter() -> CGPoint {
+        if isTitleViewHidden {
+            return CGPoint(x:bounds.width/2, y: bounds.height/2)
+        }
+        else {
+            return CGPoint(x:bounds.width/2, y: bounds.height/2 - CGFloat(items.count) * itemHeight)
+        }
+    }
+    
+    private func calculateRadius() -> CGFloat {
+        if isTitleViewHidden {
+            return min(bounds.width, bounds.height)
+        }
+        else {
+            return min(bounds.width - CGFloat(items.count) * 2 * itemHeight, bounds.height - CGFloat(items.count) * 2 * itemHeight)
+        }
+    }
 }
 
 private extension Int {
