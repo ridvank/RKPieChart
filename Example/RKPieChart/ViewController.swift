@@ -18,11 +18,12 @@ class ViewController: UIViewController {
         let secondItem: RKPieChartItem = RKPieChartItem(ratio: 30, color: .blue, title: "Second Item")
         let thirdItem: RKPieChartItem = RKPieChartItem(ratio: 10, color: .cyan, title: "Third Item")
         
-        let chartView = RKPieChartView(items: [firstItem, secondItem, thirdItem])
-        chartView.backgroundColor = .white
+        let chartView = RKPieChartView(items: [firstItem])
+        chartView.circleColor = UIColor.red.light
         chartView.translatesAutoresizingMaskIntoConstraints = false
         chartView.arcWidth = 60
-        chartView.isIntensityActivated = true
+        chartView.isIntensityActivated = false
+        chartView.style = .round
         chartView.isTitleViewHidden = false
         view.addSubview(chartView)
 
@@ -33,4 +34,27 @@ class ViewController: UIViewController {
     }
     
 }
+
+private extension UIColor {
+    var dark: UIColor {
+        var r:CGFloat = 0, g:CGFloat = 0, b:CGFloat = 0, a:CGFloat = 0
+        
+        if self.getRed(&r, green: &g, blue: &b, alpha: &a){
+            return UIColor(red: max(r - 0.4, 0.0), green: max(g - 0.4, 0.0), blue: max(b - 0.4, 0.0), alpha: a)
+        }
+        
+        return UIColor()
+    }
+    var light: UIColor {
+        var r:CGFloat = 0, g:CGFloat = 0, b:CGFloat = 0, a:CGFloat = 0
+        
+        if self.getRed(&r, green: &g, blue: &b, alpha: &a){
+            return UIColor(red: min(r + 0.4, 1.0), green: min(g + 0.4, 1.0), blue: min(b + 0.4, 1.0), alpha: a)
+        }
+        
+        return UIColor()
+    }
+    
+}
+
 

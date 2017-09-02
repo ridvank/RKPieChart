@@ -14,7 +14,11 @@ public class RKPieChartView: UIView {
     
     fileprivate var items: [RKPieChartItem] = [RKPieChartItem]()
     
-    var circleColor: UIColor = .white
+    public var circleColor: UIColor = .white {
+        didSet {
+            setNeedsLayout()
+        }
+    }
     public var arcWidth: CGFloat = 75 {
         didSet {
             setNeedsLayout()
@@ -34,7 +38,15 @@ public class RKPieChartView: UIView {
         }
     }
     private var titlesView: UIStackView?
-    var style: CGLineCap = .butt
+    public var style: CGLineCap = .butt {
+        didSet {
+            if !(items.count == 1) {
+                assertionFailure("Number of items should be equal to 1 to update style")
+                style = .butt
+            }
+            setNeedsLayout()
+        }
+    }
     
     private let startAngle: CGFloat = 3 * π / 2
     private let endAngle: CGFloat = π / 2
@@ -73,11 +85,14 @@ public class RKPieChartView: UIView {
         self.init()
         self.items = items
         calculateAngles()
+        backgroundColor = .white
     }
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        showTitle()
+        if !isTitleViewHidden {
+            showTitle()
+        }
     }
     
     private func drawCircle(){
@@ -105,7 +120,7 @@ public class RKPieChartView: UIView {
             
             if (isIntensityActivated) {
                 let deepPath = UIBezierPath(arcCenter: center,
-                                            radius: arcWidth/2,
+                                            radius: radius/2 - arcWidth - 5,
                                             startAngle: item.startAngle!,
                                             endAngle: item.endAngle!,
                                             clockwise: true)
@@ -141,7 +156,7 @@ public class RKPieChartView: UIView {
             self.addSubview(titlesView!)
             
             items.forEach({ (item) in
-                let view = PKChartTitleView(item: item)
+                let view = RKChartTitleView(item: item)
                 titlesView?.addArrangedSubview(view)
             })
         }
