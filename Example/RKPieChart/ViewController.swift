@@ -14,19 +14,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let firstItem: RKPieChartItem = RKPieChartItem(ratio: 10, color: .red, title: "1th Item")
-        let secondItem: RKPieChartItem = RKPieChartItem(ratio: 20, color: .blue, title: "2nd Item")
-        let thirdItem: RKPieChartItem = RKPieChartItem(ratio: 30, color: .orange, title: "3rd Item")
-        let fourthItem: RKPieChartItem = RKPieChartItem(ratio: 5, color: .green, title: "4th Item")
-        let fifthItem: RKPieChartItem = RKPieChartItem(ratio: 35, color: .black, title: "5th Item")
+        let firstItem: RKPieChartItem = RKPieChartItem(ratio: 50, color: .white, title: "1th Item")
         
-        let chartView = RKPieChartView(items: [firstItem, secondItem, thirdItem, fourthItem, fifthItem], centerTitle: "Center Title")
-//        chartView.circleColor = UIColor.red.light
+        let chartView = RKPieChartView(items: [firstItem])
+        chartView.circleColor = UIColor.red.light
         chartView.translatesAutoresizingMaskIntoConstraints = false
-        chartView.arcWidth = 30
+        chartView.arcWidth = 60
         chartView.isIntensityActivated = true
         chartView.style = .butt
-        chartView.isTitleViewHidden = false
+        chartView.isTitleViewHidden = true
         chartView.isAnimationActivated = true
         view.addSubview(chartView)
 
