@@ -63,10 +63,7 @@ public class RKPieChartView: UIView {
             setNeedsLayout()
         }
     }
-    
-    private let startAngle: CGFloat = 3 * π / 2
-    private let endAngle: CGFloat = π / 2
-    
+        
     private var totalRatio: CGFloat = 0
     private let itemHeight: CGFloat = 10.0
     
