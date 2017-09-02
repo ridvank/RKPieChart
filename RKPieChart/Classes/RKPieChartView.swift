@@ -10,7 +10,7 @@ import CoreGraphics
 
 let π: CGFloat = CGFloat(Double.pi)
 
-public class RKPieChart: UIView {
+public class RKPieChartView: UIView {
     
     fileprivate var items: [RKPieChartItem] = [RKPieChartItem]()
     
@@ -28,7 +28,8 @@ public class RKPieChart: UIView {
     public var isTitleViewHidden: Bool = false {
         didSet {
             if !isTitleViewHidden {
-                showTitle()
+                titlesView?.removeFromSuperview()
+                updateConstraints()
             }
         }
     }
@@ -102,7 +103,7 @@ public class RKPieChart: UIView {
             circlePath.lineCapStyle = style
             circlePath.stroke()
             
-            if isIntensityActivated {
+            if (isIntensityActivated) {
                 let deepPath = UIBezierPath(arcCenter: center,
                                             radius: arcWidth/2,
                                             startAngle: item.startAngle!,
@@ -132,10 +133,17 @@ public class RKPieChart: UIView {
     
     private func showTitle() {
         if (titlesView == nil) {
-            let center = CGPoint(x:bounds.width/2, y: bounds.height/2 - CGFloat(items.count) * itemHeight)
-            titlesView = UIStackView(frame: CGRect(x: center.x, y: 0, width: bounds.width, height: 30))
-            titlesView?.backgroundColor = .orange
+            titlesView = UIStackView(frame: CGRect(x: 0, y: bounds.height - (CGFloat(2 * items.count) * itemHeight), width: bounds.width, height: CGFloat(2 * items.count) * itemHeight))
+            titlesView?.backgroundColor = .gray
+            titlesView?.axis = .vertical
+            titlesView?.distribution  = .fillEqually
+            titlesView?.alignment = .fill
             self.addSubview(titlesView!)
+            
+            items.forEach({ (item) in
+                let view = PKChartTitleView(item: item)
+                titlesView?.addArrangedSubview(view)
+            })
         }
     }
     

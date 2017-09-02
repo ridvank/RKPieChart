@@ -14,11 +14,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let firstItem: RKPieChartItem = RKPieChartItem(ratio: 60, color: .red)
-        let secondItem: RKPieChartItem = RKPieChartItem(ratio: 30, color: .blue)
-        let thirdItem: RKPieChartItem = RKPieChartItem(ratio: 10, color: .cyan)
+        let firstItem: RKPieChartItem = RKPieChartItem(ratio: 60, color: .red, title: "First Item")
+        let secondItem: RKPieChartItem = RKPieChartItem(ratio: 30, color: .blue, title: "Second Item")
+        let thirdItem: RKPieChartItem = RKPieChartItem(ratio: 10, color: .cyan, title: "Third Item")
         
-        let chartView = RKPieChart(items: [firstItem, secondItem, thirdItem])
+        let chartView = RKPieChartView(items: [firstItem, secondItem, thirdItem])
         chartView.backgroundColor = .white
         chartView.translatesAutoresizingMaskIntoConstraints = false
         chartView.arcWidth = 60
