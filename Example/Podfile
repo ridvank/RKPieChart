@@ -6,7 +6,6 @@ target 'RKPieChart_Example' do
   target 'RKPieChart_Tests' do
     inherit! :search_paths
 
-    pod 'FBSnapshotTestCase'
   end
 end
 

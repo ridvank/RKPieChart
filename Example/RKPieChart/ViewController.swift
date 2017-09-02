@@ -22,9 +22,10 @@ class ViewController: UIViewController {
         chartView.circleColor = UIColor.red.light
         chartView.translatesAutoresizingMaskIntoConstraints = false
         chartView.arcWidth = 60
-        chartView.isIntensityActivated = false
+        chartView.isIntensityActivated = true
         chartView.style = .round
         chartView.isTitleViewHidden = false
+        chartView.isAnimationActivated = true
         view.addSubview(chartView)
 
         chartView.widthAnchor.constraint(equalToConstant: 250).isActive = true

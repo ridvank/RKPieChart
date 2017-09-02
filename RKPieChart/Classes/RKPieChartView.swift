@@ -10,9 +10,21 @@ import CoreGraphics
 
 let π: CGFloat = CGFloat(Double.pi)
 
+private enum LineCapStyle: Int {
+    
+    case butt = 0
+    case round
+    case style
+    
+    var description: String {
+        get { return String(describing: self) }
+    }
+}
+
 public class RKPieChartView: UIView {
     
     fileprivate var items: [RKPieChartItem] = [RKPieChartItem]()
+    private var titlesView: UIStackView?
     
     public var circleColor: UIColor = .white {
         didSet {
@@ -37,13 +49,17 @@ public class RKPieChartView: UIView {
             }
         }
     }
-    private var titlesView: UIStackView?
     public var style: CGLineCap = .butt {
         didSet {
-            if !(items.count == 1) {
+            if (items.count != 1 && style != .butt) {
                 assertionFailure("Number of items should be equal to 1 to update style")
                 style = .butt
             }
+            setNeedsLayout()
+        }
+    }
+    public var isAnimationActivated: Bool = false {
+        didSet {
             setNeedsLayout()
         }
     }
@@ -53,6 +69,8 @@ public class RKPieChartView: UIView {
     
     private var totalRatio: CGFloat = 0
     private let itemHeight: CGFloat = 10.0
+    
+    private var currentTime = CACurrentMediaTime()
     
     override public func draw(_ rect: CGRect) {
         
@@ -85,7 +103,7 @@ public class RKPieChartView: UIView {
         self.init()
         self.items = items
         calculateAngles()
-        backgroundColor = .white
+        backgroundColor = .clear
     }
     
     public override func layoutSubviews() {
@@ -112,11 +130,34 @@ public class RKPieChartView: UIView {
                                           endAngle: item.endAngle!,
                                           clockwise: true)
             
-            // Draw circle path
-            circlePath.lineWidth = arcWidth
-            item.color.setStroke()
             circlePath.lineCapStyle = style
-            circlePath.stroke()
+            
+            if(!isAnimationActivated) {
+                // Draw circle path
+                circlePath.lineWidth = arcWidth
+                circlePath.lineCapStyle = style
+                item.color.setStroke()
+                circlePath.stroke()
+            }
+            else {
+                let shapeLayer: CAShapeLayer = CAShapeLayer()
+                shapeLayer.path = circlePath.cgPath
+                shapeLayer.strokeColor = item.color.cgColor
+                shapeLayer.lineWidth = arcWidth
+                shapeLayer.fillColor = UIColor.clear.cgColor
+                
+                if let lineCap = (LineCapStyle(rawValue: Int(style.rawValue))?.description) {
+                    shapeLayer.lineCap = lineCap
+                }
+                
+                layer.addSublayer(shapeLayer)
+                
+                let animation = CABasicAnimation(keyPath: "strokeEnd")
+                animation.duration = 0.5
+                animation.fromValue = 0.0
+                animation.toValue = 1.0
+                shapeLayer.add(animation, forKey: "strokeEnd")
+            }
             
             if (isIntensityActivated) {
                 let deepPath = UIBezierPath(arcCenter: center,
