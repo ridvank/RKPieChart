@@ -9,34 +9,20 @@
 Pod::Spec.new do |s|
   s.name             = 'RKPieChart'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of RKPieChart.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.summary          = 'Create super easy pie charts with RKPieChart!'
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+RKPieChart creates pie charts in super easy way for you. You can divide your pie chart if you want. You can add custom titles for your divided pies and etc.
                        DESC
 
   s.homepage         = 'https://github.com/ridvank/RKPieChart'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'ridvank' => 'ridvankuccuk@gmail.com' }
   s.source           = { :git => 'https://github.com/ridvank/RKPieChart.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  # s.social_media_url = 'https://www.linkedin.com/in/rıdvan-küçük-a6598593'
 
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'RKPieChart/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'RKPieChart' => ['RKPieChart/Assets/*.png']
-  # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
