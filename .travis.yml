@@ -2,13 +2,18 @@
 # * http://www.objc.io/issue-6/travis-ci.html
 # * https://github.com/supermarin/xcpretty#usage
 
-osx_image: xcode7.3
+osx_image: xcode8
 language: objective-c
-# cache: cocoapods
-# podfile: Example/Podfile
-# before_install:
-# - gem install cocoapods # Since Travis is not always on latest version
-# - pod install --project-directory=Example
+xcode_workspace: Example/RKPieChart.xcworkspace
+xcode_sdk: iphonesimulator10.0
+xcode_scheme: RKPieChartExample
+podfile: Example/Podfile
+on:
+  repo: ridvank/RKPieChart
+  tags: true
+before_install:
+- gem install cocoapods
+- pod install --project-directory=Example
 script:
-- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/RKPieChart.xcworkspace -scheme RKPieChart-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
-- pod lib lint
+- set -o pipefail
+- xcodebuild -version
